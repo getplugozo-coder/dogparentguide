@@ -12,7 +12,6 @@ import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { HomePage } from './pages/HomePage';
 import { ArticlePage } from './pages/ArticlePage';
-import { AdminPage } from './pages/AdminPage';
 import { CategoryPage } from './pages/CategoryPage';
 import { TagPage } from './pages/TagPage';
 import { AuthorPage } from './pages/AuthorPage';
@@ -56,9 +55,6 @@ export default function App() {
               <Route path="/affiliate-disclosure" element={<LegalPage />} />
               <Route path="/editorial-policy" element={<LegalPage />} />
               <Route path="/dmca" element={<LegalPage />} />
-
-              {/* Admin Panel (hidden - no public links point here) */}
-              <Route path="/admin/*" element={<AdminPage />} />
 
               {/* 404 */}
               <Route path="/404" element={<NotFoundPage />} />

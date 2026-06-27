@@ -1,0 +1,73 @@
+{
+  "sheets": {
+    "Articles": {
+      "headers": [
+        "id","title","slug","seo_title","meta_description","excerpt","content_html",
+        "featured_image","category","tags","author","published_date","updated_date",
+        "featured","trending","faq_json","schema_type","reading_time","canonical","status","views"
+      ],
+      "sample_row": [
+        "1","The Ultimate Guide to Dog Nutrition","ultimate-guide-dog-nutrition",
+        "Dog Nutrition Guide: Complete Feeding Guide for Dog Parents",
+        "Learn everything about dog nutrition, from ingredients to portion sizes.",
+        "Discover the science behind optimal dog nutrition.",
+        "<h2>Understanding Dog Nutrition</h2><p>Content here...</p>",
+        "/images/article-nutrition.jpg","nutrition","[\"nutrition\",\"dog food\",\"health\"]",
+        "dr-sarah-johnson","2024-01-15","2024-03-10",
+        "TRUE","TRUE","[]","Article","12","/articles/ultimate-guide-dog-nutrition","published","45230"
+      ]
+    },
+    "Categories": {
+      "headers": [
+        "id","name","slug","description","icon","color","featured_image",
+        "seo_title","meta_description","parent_category","post_count","order","status"
+      ],
+      "sample_row": [
+        "1","Nutrition","nutrition","Expert guidance on dog nutrition, diet plans, and feeding schedules.",
+        "🥗","#22c55e","/images/article-nutrition.jpg",
+        "Dog Nutrition Articles | DogParentGuide",
+        "Expert dog nutrition advice from certified veterinary nutritionists.",
+        "","24","1","active"
+      ]
+    },
+    "Authors": {
+      "headers": [
+        "id","name","slug","bio","avatar","role","credentials",
+        "website","twitter","instagram","pinterest","facebook","email","post_count","status"
+      ],
+      "sample_row": [
+        "1","Dr. Sarah Johnson","dr-sarah-johnson",
+        "Dr. Sarah Johnson is a Doctor of Veterinary Medicine with 15 years of experience.",
+        "/images/author-sarah.jpg","Veterinary Expert & Senior Editor","DVM, MS, DACVN",
+        "","@drsarahjohnson","@drsarahjohnsonvet","","","sarah@dogparentguide.com","47","active"
+      ]
+    },
+    "Ads": {
+      "headers": [
+        "id","name","placement","ad_code","active","start_date","end_date","pages"
+      ],
+      "sample_row": [
+        "1","Header Banner","header_banner",
+        "<ins class=\"adsbygoogle\" style=\"display:block\" data-ad-client=\"ca-pub-XXXXXXXXXX\" data-ad-slot=\"XXXXXXXXXX\" data-ad-format=\"auto\"></ins>",
+        "TRUE","2024-01-01","2025-01-01","all"
+      ]
+    },
+    "Settings": {
+      "headers": ["key","value"],
+      "sample_rows": [
+        ["site_name","DogParentGuide"],
+        ["site_tagline","Expert Advice for Every Dog Parent"],
+        ["site_description","DogParentGuide is the premium authority resource for dog parents."],
+        ["site_url","https://dogparentguide.pages.dev"],
+        ["contact_email","ihoum24@gmail.com"],
+        ["theme_color","#22c55e"],
+        ["articles_per_page","9"],
+        ["google_analytics_id","G-XXXXXXXXXX"]
+      ]
+    }
+  },
+  "instructions": {
+    "ar": "1. افتح Google Sheets\n2. أنشئ Spreadsheet جديد\n3. سمّ الأوراق (Sheets) بالأسماء فوق: Articles, Categories, Authors, Ads, Settings\n4. الصق الـ Headers في الصف الأول من كل ورقة\n5. ابدأ بإضافة بياناتك من الصف الثاني\n6. شارك الـ Sheet كـ Anyone with link → Viewer\n7. انسخ Spreadsheet ID من الرابط",
+    "en": "1. Open Google Sheets\n2. Create a new Spreadsheet\n3. Name the sheets: Articles, Categories, Authors, Ads, Settings\n4. Paste headers in row 1 of each sheet\n5. Add your data starting from row 2\n6. Share as Anyone with link → Viewer\n7. Copy Spreadsheet ID from URL"
+  }
+}
