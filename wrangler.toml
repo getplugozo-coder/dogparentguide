@@ -2,7 +2,7 @@
 # DogParentGuide - Cloudflare Worker Configuration
 # Deploy: wrangler deploy
 # ============================================================
-name = "dogparentguide-sheets-proxy"
+name = "dogparentguide"
 main = "worker/sheets-proxy.ts"
 compatibility_date = "2024-12-01"
 compatibility_flags = ["nodejs_compat"]
