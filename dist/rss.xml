@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:content="http://purl.org/rss/1.0/modules/content/">
+  <channel>
+    <title>DogParentGuide</title>
+    <link>https://dogparentguide.com</link>
+    <description>Expert advice for every dog parent. Nutrition, training, health, grooming, and breed guides from veterinarians and certified professionals.</description>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 27 Jun 2026 22:04:27 GMT</lastBuildDate>
+    <atom:link href="https://dogparentguide.com/rss.xml" rel="self" type="application/rss+xml"/>
+    <image>
+      <url>https://dogparentguide.com/images/logo.png</url>
+      <title>DogParentGuide</title>
+      <link>https://dogparentguide.com</link>
+    </image>
+    
+  <item>
+    <title><![CDATA[The Ultimate Guide to Dog Nutrition: What Every Dog Parent Needs to Know]]></title>
+    <link>https://dogparentguide.com/articles/ultimate-guide-dog-nutrition</link>
+    <guid>https://dogparentguide.com/articles/ultimate-guide-dog-nutrition</guid>
+    <description><![CDATA[Discover the science behind optimal dog nutrition. Our comprehensive guide covers everything from macronutrients and vitamins to age-specific feeding plans.]]></description>
+    <pubDate>Mon, 15 Jan 2024 00:00:00 GMT</pubDate>
+    <category>nutrition</category>
+  </item>
+  <item>
+    <title><![CDATA[Dog Nutrition Guide 2024: Complete Feeding Guide for Dog Parents]]></title>
+    <link>https://dogparentguide.com/articles/essential-dog-training-tips-first-time-owners</link>
+    <guid>https://dogparentguide.com/articles/essential-dog-training-tips-first-time-owners</guid>
+    <description><![CDATA[Whether you just brought home a puppy or adopted an adult dog, these 10 expert-backed training tips will set both of you up for success.]]></description>
+    <pubDate>Thu, 01 Feb 2024 00:00:00 GMT</pubDate>
+    <category>training</category>
+  </item>
+  <item>
+    <title><![CDATA[Complete Dog Nutrition Guide - What Every Dog Parent Must Know]]></title>
+    <link>https://dogparentguide.com/articles/dog-health-warning-signs</link>
+    <guid>https://dogparentguide.com/articles/dog-health-warning-signs</guid>
+    <description><![CDATA[Could you recognize a health emergency in your dog? Learn the 15 warning signs that should prompt an immediate call to your veterinarian.]]></description>
+    <pubDate>Tue, 20 Feb 2024 00:00:00 GMT</pubDate>
+    <category>health</category>
+  </item>
+  <item>
+    <title><![CDATA[10 Essential Dog Training Tips for First-Time Dog Owners]]></title>
+    <link>https://dogparentguide.com/articles/complete-dog-grooming-guide</link>
+    <guid>https://dogparentguide.com/articles/complete-dog-grooming-guide</guid>
+    <description><![CDATA[Professional grooming at home is easier than you think. Our complete guide covers bathing, brushing, nail trimming, ear cleaning, and more.]]></description>
+    <pubDate>Fri, 01 Mar 2024 00:00:00 GMT</pubDate>
+    <category>grooming</category>
+  </item>
+  <item>
+    <title><![CDATA[Dog Training Tips for Beginners: 10 Expert-Backed Methods]]></title>
+    <link>https://dogparentguide.com/articles/best-dog-breeds-families-children</link>
+    <guid>https://dogparentguide.com/articles/best-dog-breeds-families-children</guid>
+    <description><![CDATA[Not all dogs are created equal when it comes to family life. Discover the 15 breeds known for their gentle temperaments and compatibility with children.]]></description>
+    <pubDate>Sun, 10 Mar 2024 00:00:00 GMT</pubDate>
+    <category>breeds</category>
+  </item>
+  <item>
+    <title><![CDATA[10 Dog Training Tips Every New Dog Owner Needs]]></title>
+    <link>https://dogparentguide.com/articles/puppy-proofing-home-safety-checklist</link>
+    <guid>https://dogparentguide.com/articles/puppy-proofing-home-safety-checklist</guid>
+    <description><![CDATA[Before your puppy comes home, make sure your space is safe! Our complete checklist covers every room in the house plus yard safety tips.]]></description>
+    <pubDate>Fri, 15 Mar 2024 00:00:00 GMT</pubDate>
+    <category>puppy-care</category>
+  </item>
+  </channel>
+</rss>

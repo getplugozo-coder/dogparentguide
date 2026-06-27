@@ -1,0 +1,15 @@
+User-agent: *
+Allow: /
+
+# Disallow admin/API paths
+Disallow: /api/
+Disallow: /_worker/
+
+# Sitemap
+Sitemap: https://dogparentguide.com/sitemap.xml
+
+# Crawl delay (optional)
+Crawl-delay: 1
+
+# RSS Feed
+Sitemap: https://dogparentguide.com/rss.xml

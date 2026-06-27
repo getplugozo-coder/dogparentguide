@@ -1,0 +1,6 @@
+# Cloudflare Pages Redirects
+# SPA Fallback - All routes handled by React Router
+/*    /index.html   200
+
+# Legacy URL redirects (add as needed)
+# /old-url    /new-url    301
