@@ -1,18 +1,5 @@
 {
   "version": 1,
-  "include": ["/*"],
-  "exclude": [
-    "/images/*",
-    "/assets/*",
-    "/favicon.ico",
-    "/apple-touch-icon.png",
-    "/sitemap.xml",
-    "/rss.xml",
-    "/robots.txt",
-    "/ads.txt",
-    "/_headers",
-    "/_redirects",
-    "/*.js",
-    "/*.css"
-  ]
+  "include": ["/api/*"],
+  "exclude": []
 }
