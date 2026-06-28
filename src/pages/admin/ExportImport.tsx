@@ -3,9 +3,11 @@ import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../lib/adminAuth';
 import { AdminLayout } from './AdminLayout';
 import { dataService } from '../../lib/dataService';
+import { useData } from '../../contexts/DataContext';
 
 export function ExportImport() {
   const navigate = useNavigate();
+  const { refresh } = useData();
   const [json, setJson] = useState('');
   const [message, setMessage] = useState('');
 
@@ -31,6 +33,7 @@ export function ExportImport() {
     if (!json.trim()) { setMessage('⚠️ الرجاء لصق البيانات أولاً'); return; }
     if (dataService.importAll(json)) {
       setMessage('✅ تم الاستيراد بنجاح');
+      refresh();
     } else {
       setMessage('❌ فشل الاستيراد. تأكد من صيغة JSON');
     }

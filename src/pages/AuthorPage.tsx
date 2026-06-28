@@ -9,8 +9,7 @@ import { Sidebar } from '../components/layout/Sidebar';
 import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { ArticleCard } from '../components/ui/ArticleCard';
 import { Pagination } from '../components/ui/Pagination';
-import { articles } from '../data/articles';
-import { authors } from '../data/authors';
+import { useData } from '../contexts/DataContext';
 import { getArticlesByAuthor, paginate } from '../utils/helpers';
 
 const ARTICLES_PER_PAGE = 9;
@@ -18,6 +17,7 @@ const ARTICLES_PER_PAGE = 9;
 export function AuthorPage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { articles, authors } = useData();
   const [currentPage, setCurrentPage] = useState(1);
 
   const author = authors.find(a => a.slug === slug);

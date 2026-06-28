@@ -1,26 +1,12 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../lib/adminAuth';
 import { AdminLayout } from './AdminLayout';
-import { dataService } from '../../lib/dataService';
-import { articles as initialArticles } from '../../data/articles';
-import { categories as initialCategories } from '../../data/categories';
-import { authors as initialAuthors } from '../../data/authors';
+import { useData } from '../../contexts/DataContext';
 
 export function AdminDashboard() {
   const navigate = useNavigate();
-  const [articles] = useState(() => {
-    const stored = dataService.getArticles();
-    return stored.length ? stored : initialArticles;
-  });
-  const [categories] = useState(() => {
-    const stored = dataService.getCategories();
-    return stored.length ? stored : initialCategories;
-  });
-  const [authors] = useState(() => {
-    const stored = dataService.getAuthors();
-    return stored.length ? stored : initialAuthors;
-  });
+  const { allArticles: articles, categories, authors, loading } = useData();
 
   useEffect(() => {
     if (!isAuthenticated()) navigate('/admin/login');
@@ -32,7 +18,7 @@ export function AdminDashboard() {
     { label: 'التصنيفات', value: categories.length, icon: '📂', color: 'blue' },
     { label: 'المؤلفون', value: authors.length, icon: '✍️', color: 'purple' },
     { label: 'إجمالي المشاهدات', value: articles.reduce((s, a) => s + (a.views || 0), 0).toLocaleString(), icon: '👁️', color: 'orange' },
-    { label: 'المساحة التخزينية', value: `${(JSON.stringify(articles).length / 1024).toFixed(1)} KB`, icon: '💾', color: 'pink' },
+    { label: 'ذاكرة التخزين', value: loading ? '...' : `${articles.length} مقال`, icon: '💾', color: 'pink' },
   ];
 
   const recentArticles = [...articles]

@@ -3,44 +3,40 @@
 // Uses Fuse.js for fast client-side search
 // ============================================================
 
-import { useState, useEffect, useCallback } from 'react';
+import { useState, useEffect, useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import Fuse from 'fuse.js';
 import { SEOHead } from '../components/layout/SEOHead';
 import { ArticleCard } from '../components/ui/ArticleCard';
 import { Pagination } from '../components/ui/Pagination';
-import { articles } from '../data/articles';
+import { useData } from '../contexts/DataContext';
 import { paginate } from '../utils/helpers';
 
 const RESULTS_PER_PAGE = 9;
 
-// Build search index
-const searchIndex = articles
-  .filter(a => a.status === 'published')
-  .map(a => ({
-    ...a,
-    tagsString: a.tags.join(' '),
-  }));
-
-const fuse = new Fuse(searchIndex, {
-  keys: [
-    { name: 'title', weight: 2 },
-    { name: 'excerpt', weight: 1.5 },
-    { name: 'tagsString', weight: 1.2 },
-    { name: 'category', weight: 1 },
-    { name: 'content_html', weight: 0.5 },
-  ],
-  threshold: 0.4,
-  includeScore: true,
-  minMatchCharLength: 2,
-});
-
 export function SearchPage() {
+  const { articles } = useData();
   const [searchParams, setSearchParams] = useSearchParams();
   const initialQuery = searchParams.get('q') || '';
   const [query, setQuery] = useState(initialQuery);
   const [inputValue, setInputValue] = useState(initialQuery);
   const [currentPage, setCurrentPage] = useState(1);
+
+  const fuse = useMemo(() => new Fuse(
+    articles.filter(a => a.status === 'published').map(a => ({ ...a, tagsString: a.tags.join(' ') })),
+    {
+      keys: [
+        { name: 'title', weight: 2 },
+        { name: 'excerpt', weight: 1.5 },
+        { name: 'tagsString', weight: 1.2 },
+        { name: 'category', weight: 1 },
+        { name: 'content_html', weight: 0.5 },
+      ],
+      threshold: 0.4,
+      includeScore: true,
+      minMatchCharLength: 2,
+    }
+  ), [articles]);
 
   const searchResults = query
     ? fuse.search(query).map(r => r.item)

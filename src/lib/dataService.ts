@@ -1,4 +1,10 @@
-import type { Article, Category, Author, Ad, AdPlacement } from '../data/types';
+import type { Article, Category, Author, Ad } from '../data/types';
+import {
+  saveArticleToAPI,
+  saveCategoryToAPI,
+  saveAuthorToAPI,
+  saveAdToAPI,
+} from './api';
 
 const STORAGE_KEYS = {
   articles: 'dpg_articles',
@@ -20,6 +26,12 @@ function setItem<T>(key: string, data: T[]): void {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
+// Column headers matching Google Sheets template
+const ARTICLE_HEADERS = ['id','title','slug','excerpt','content','featured_image','category_id','author_id','tags','reading_time','published_date','status','featured','trending','views','meta_title','meta_description','meta_keywords','canonical_url','faq_json','language'];
+const CATEGORY_HEADERS = ['id','name','slug','description','icon','color','image','parent_id','order','meta_title','meta_description','meta_keywords','language'];
+const AUTHOR_HEADERS = ['id','name','slug','avatar','bio','role','email','website','twitter','facebook','instagram','youtube','credentials','specialization','language'];
+const AD_HEADERS = ['id','name','type','code','placement','active','start_date','end_date'];
+
 export const dataService = {
   // Articles
   getArticles(): Article[] {
@@ -31,12 +43,13 @@ export const dataService = {
   getArticle(id: string): Article | undefined {
     return this.getArticles().find(a => a.id === id);
   },
-  saveArticle(article: Article): void {
+  async saveArticle(article: Article): Promise<void> {
     const articles = this.getArticles();
     const idx = articles.findIndex(a => a.id === article.id);
     if (idx >= 0) articles[idx] = article;
     else articles.push(article);
     this.setArticles(articles);
+    await saveArticleToAPI(article, ARTICLE_HEADERS);
   },
   deleteArticle(id: string): void {
     this.setArticles(this.getArticles().filter(a => a.id !== id));
@@ -49,12 +62,13 @@ export const dataService = {
   setCategories(cats: Category[]): void {
     setItem(STORAGE_KEYS.categories, cats);
   },
-  saveCategory(cat: Category): void {
+  async saveCategory(cat: Category): Promise<void> {
     const cats = this.getCategories();
     const idx = cats.findIndex(c => c.id === cat.id);
     if (idx >= 0) cats[idx] = cat;
     else cats.push(cat);
     this.setCategories(cats);
+    await saveCategoryToAPI(cat, CATEGORY_HEADERS);
   },
   deleteCategory(id: string): void {
     this.setCategories(this.getCategories().filter(c => c.id !== id));
@@ -67,12 +81,13 @@ export const dataService = {
   setAuthors(authors: Author[]): void {
     setItem(STORAGE_KEYS.authors, authors);
   },
-  saveAuthor(author: Author): void {
+  async saveAuthor(author: Author): Promise<void> {
     const authors = this.getAuthors();
     const idx = authors.findIndex(a => a.id === author.id);
     if (idx >= 0) authors[idx] = author;
     else authors.push(author);
     this.setAuthors(authors);
+    await saveAuthorToAPI(author, AUTHOR_HEADERS);
   },
   deleteAuthor(id: string): void {
     this.setAuthors(this.getAuthors().filter(a => a.id !== id));
@@ -85,12 +100,13 @@ export const dataService = {
   setAds(ads: Ad[]): void {
     setItem(STORAGE_KEYS.ads, ads);
   },
-  saveAd(ad: Ad): void {
+  async saveAd(ad: Ad): Promise<void> {
     const ads = this.getAds();
     const idx = ads.findIndex(a => a.id === ad.id);
     if (idx >= 0) ads[idx] = ad;
     else ads.push(ad);
     this.setAds(ads);
+    await saveAdToAPI(ad, AD_HEADERS);
   },
   deleteAd(id: string): void {
     this.setAds(this.getAds().filter(a => a.id !== id));

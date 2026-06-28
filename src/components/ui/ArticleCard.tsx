@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import { Badge } from './Badge';
 import { formatDate, getReadingTimeText } from '../../utils/helpers';
 import type { Article } from '../../data/types';
-import { authors } from '../../data/authors';
-import { categories } from '../../data/categories';
+import { useData } from '../../contexts/DataContext';
 
 interface ArticleCardProps {
   article: Article;
@@ -24,6 +23,7 @@ export function ArticleCard({
   showAuthor = true,
   className = '',
 }: ArticleCardProps) {
+  const { authors, categories } = useData();
   const author = authors.find(a => a.slug === article.author);
   const category = categories.find(c => c.slug === article.category);
 

@@ -9,18 +9,17 @@ import { ArticleCard } from '../components/ui/ArticleCard';
 import { NewsletterBox } from '../components/ui/NewsletterBox';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
-import { articles } from '../data/articles';
-import { categories } from '../data/categories';
 import { siteSettings } from '../data/settings';
+import { useData } from '../contexts/DataContext';
 import {
   getFeaturedArticles,
   getTrendingArticles,
   getLatestArticles,
   getArticlesByCategory,
 } from '../utils/helpers';
-import { authors } from '../data/authors';
 
 export function HomePage() {
+  const { articles, categories, authors } = useData();
   const featuredArticles = getFeaturedArticles(articles, 4);
   const trendingArticles = getTrendingArticles(articles, 4);
   const latestArticles = getLatestArticles(articles, 6);

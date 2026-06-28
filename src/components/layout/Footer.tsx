@@ -5,9 +5,10 @@
 import { Link } from 'react-router-dom';
 import { Logo } from '../ui/Logo';
 import { navigationMenus, socialLinks, siteSettings } from '../../data/settings';
-import { categories } from '../../data/categories';
+import { useData } from '../../contexts/DataContext';
 
 export function Footer() {
+  const { categories } = useData();
   const currentYear = new Date().getFullYear();
 
   return (

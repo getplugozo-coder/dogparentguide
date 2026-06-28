@@ -8,6 +8,7 @@
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { HelmetProvider } from 'react-helmet-async';
+import { DataProvider } from './contexts/DataContext';
 import { Header } from './components/layout/Header';
 import { Footer } from './components/layout/Footer';
 import { HomePage } from './pages/HomePage';
@@ -28,7 +29,8 @@ export default function App() {
   return (
     <HelmetProvider>
       <Router>
-        <div className="min-h-screen bg-white flex flex-col">
+        <DataProvider>
+        <div className="min-h-screen flex flex-col" style={{ backgroundColor: 'var(--bg-primary)' }}>
           <Header />
           <div className="flex-1">
             <Routes>
@@ -67,6 +69,7 @@ export default function App() {
           </div>
           <Footer />
         </div>
+        </DataProvider>
       </Router>
     </HelmetProvider>
   );

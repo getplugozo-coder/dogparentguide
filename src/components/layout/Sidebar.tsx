@@ -6,8 +6,7 @@ import { Link } from 'react-router-dom';
 import { ArticleCard } from '../ui/ArticleCard';
 import { NewsletterBox } from '../ui/NewsletterBox';
 import { Badge } from '../ui/Badge';
-import { articles } from '../../data/articles';
-import { categories } from '../../data/categories';
+import { useData } from '../../contexts/DataContext';
 import { getPopularArticles, getTrendingArticles, formatNumber } from '../../utils/helpers';
 
 interface SidebarProps {
@@ -15,6 +14,7 @@ interface SidebarProps {
 }
 
 export function Sidebar({ currentArticleId }: SidebarProps) {
+  const { articles, categories } = useData();
   const filteredArticles = articles.filter(a => a.id !== currentArticleId && a.status === 'published');
   const popularArticles = getPopularArticles(filteredArticles, 5);
   const trendingArticles = getTrendingArticles(filteredArticles, 4);

@@ -7,9 +7,10 @@ import { SEOHead } from '../components/layout/SEOHead';
 import { Button } from '../components/ui/Button';
 import { ArticleCard } from '../components/ui/ArticleCard';
 import { getLatestArticles } from '../utils/helpers';
-import { articles } from '../data/articles';
+import { useData } from '../contexts/DataContext';
 
 export function NotFoundPage() {
+  const { articles } = useData();
   const latestArticles = getLatestArticles(articles, 3);
 
   return (

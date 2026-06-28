@@ -4,13 +4,12 @@
 
 import { Link } from 'react-router-dom';
 import { SEOHead } from '../components/layout/SEOHead';
-import { articles } from '../data/articles';
-import { categories } from '../data/categories';
-import { authors } from '../data/authors';
+import { useData } from '../contexts/DataContext';
 import { navigationMenus } from '../data/settings';
 import { formatDate } from '../utils/helpers';
 
 export function SitemapPage() {
+  const { articles, categories, authors } = useData();
   const publishedArticles = articles.filter(a => a.status === 'published');
 
   return (

@@ -9,7 +9,7 @@ import { Sidebar } from '../components/layout/Sidebar';
 import { Breadcrumb } from '../components/ui/Breadcrumb';
 import { ArticleCard } from '../components/ui/ArticleCard';
 import { Pagination } from '../components/ui/Pagination';
-import { articles } from '../data/articles';
+import { useData } from '../contexts/DataContext';
 import { getArticlesByTag, paginate } from '../utils/helpers';
 
 const ARTICLES_PER_PAGE = 9;
@@ -17,6 +17,7 @@ const ARTICLES_PER_PAGE = 9;
 export function TagPage() {
   const { tag } = useParams<{ tag: string }>();
   const navigate = useNavigate();
+  const { articles } = useData();
   const [currentPage, setCurrentPage] = useState(1);
 
   const decodedTag = tag ? decodeURIComponent(tag.replace(/-/g, ' ')) : '';

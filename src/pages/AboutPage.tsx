@@ -5,9 +5,10 @@
 import { Link } from 'react-router-dom';
 import { SEOHead } from '../components/layout/SEOHead';
 import { Button } from '../components/ui/Button';
-import { authors } from '../data/authors';
+import { useData } from '../contexts/DataContext';
 
 export function AboutPage() {
+  const { authors } = useData();
   return (
     <>
       <SEOHead

@@ -13,10 +13,8 @@ import { ShareButtons } from '../components/ui/ShareButtons';
 import { TableOfContents } from '../components/ui/TableOfContents';
 import { FAQSection } from '../components/ui/FAQSection';
 import { NewsletterBox } from '../components/ui/NewsletterBox';
-import { articles } from '../data/articles';
-import { authors } from '../data/authors';
-import { categories } from '../data/categories';
 import { siteSettings } from '../data/settings';
+import { useData } from '../contexts/DataContext';
 import {
   formatDate,
   getReadingTimeText,
@@ -29,6 +27,7 @@ import {
 export function ArticlePage() {
   const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
+  const { articles, authors, categories } = useData();
 
   const article = articles.find(a => a.slug === slug && a.status === 'published');
 

@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../lib/adminAuth';
 import { AdminLayout } from './AdminLayout';
 import { dataService } from '../../lib/dataService';
+import { useData } from '../../contexts/DataContext';
 import type { Ad, AdPlacement } from '../../data/types';
 
 const placements: AdPlacement[] = [
@@ -35,6 +36,7 @@ const networkOptions = [
 
 export function AdsManager() {
   const navigate = useNavigate();
+  const { refresh: refreshContext } = useData();
   const [items, setItems] = useState<Ad[]>(() => dataService.getAds());
   const [editing, setEditing] = useState<Ad | null>(null);
 
@@ -45,7 +47,7 @@ export function AdsManager() {
   const refresh = () => setItems(dataService.getAds());
 
   const handleDelete = (id: string) => {
-    if (confirm('تأكيد الحذف؟')) { dataService.deleteAd(id); refresh(); }
+    if (confirm('تأكيد الحذف؟')) { dataService.deleteAd(id); refresh(); refreshContext(); }
   };
 
   const emptyAd = (): Ad => ({
@@ -90,7 +92,7 @@ export function AdsManager() {
               مفعل
             </label>
             <div className="flex gap-3 pt-2">
-              <button onClick={() => { dataService.saveAd(editing); setEditing(null); refresh(); }} className="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl text-sm">💾 حفظ</button>
+              <button onClick={async () => { await dataService.saveAd(editing); setEditing(null); refresh(); refreshContext(); }} className="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl text-sm">💾 حفظ</button>
               <button onClick={() => setEditing(null)} className="px-5 py-2.5 bg-gray-800 text-gray-300 rounded-xl text-sm">إلغاء</button>
             </div>
           </div>

@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../lib/adminAuth';
 import { AdminLayout } from './AdminLayout';
 import { dataService } from '../../lib/dataService';
+import { useData } from '../../contexts/DataContext';
 import { categories as initialCats } from '../../data/categories';
 import type { Category } from '../../data/types';
 
 export function CategoriesManager() {
   const navigate = useNavigate();
+  const { refresh: refreshContext } = useData();
   const [items, setItems] = useState<Category[]>(() => {
     const stored = dataService.getCategories();
     return stored.length ? stored : initialCats;
@@ -24,7 +26,7 @@ export function CategoriesManager() {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('تأكيد الحذف؟')) { dataService.deleteCategory(id); refresh(); }
+    if (confirm('تأكيد الحذف؟')) { dataService.deleteCategory(id); refresh(); refreshContext(); }
   };
 
   const emptyCat = (): Category => ({
@@ -46,7 +48,7 @@ export function CategoriesManager() {
               </div>
             ))}
             <div className="flex gap-3 pt-2">
-              <button onClick={() => { dataService.saveCategory(editing); setEditing(null); refresh(); }} className="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl transition-colors text-sm">💾 حفظ</button>
+              <button onClick={async () => { await dataService.saveCategory(editing); setEditing(null); refresh(); refreshContext(); }} className="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl transition-colors text-sm">💾 حفظ</button>
               <button onClick={() => setEditing(null)} className="px-5 py-2.5 bg-gray-800 text-gray-300 rounded-xl text-sm">إلغاء</button>
             </div>
           </div>

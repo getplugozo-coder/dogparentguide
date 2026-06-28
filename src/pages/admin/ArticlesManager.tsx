@@ -3,12 +3,14 @@ import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../lib/adminAuth';
 import { AdminLayout } from './AdminLayout';
 import { dataService } from '../../lib/dataService';
+import { useData } from '../../contexts/DataContext';
 import { articles as initialArticles } from '../../data/articles';
 import { categories } from '../../data/categories';
 import type { Article } from '../../data/types';
 
 export function ArticlesManager() {
   const navigate = useNavigate();
+  const { refresh: refreshContext } = useData();
   const [items, setItems] = useState<Article[]>(() => {
     const stored = dataService.getArticles();
     return stored.length ? stored : initialArticles;
@@ -30,14 +32,16 @@ export function ArticlesManager() {
     if (confirm('تأكيد حذف المقال؟')) {
       dataService.deleteArticle(id);
       refresh();
+      refreshContext();
     }
   };
 
-  const handleSave = (article: Article) => {
-    dataService.saveArticle(article);
+  const handleSave = async (article: Article) => {
+    await dataService.saveArticle(article);
     setEditing(null);
     setIsNew(false);
     refresh();
+    refreshContext();
   };
 
   const filtered = items.filter(a =>

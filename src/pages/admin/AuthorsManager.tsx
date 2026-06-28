@@ -3,11 +3,13 @@ import { useNavigate } from 'react-router-dom';
 import { isAuthenticated } from '../../lib/adminAuth';
 import { AdminLayout } from './AdminLayout';
 import { dataService } from '../../lib/dataService';
+import { useData } from '../../contexts/DataContext';
 import { authors as initialAuthors } from '../../data/authors';
 import type { Author } from '../../data/types';
 
 export function AuthorsManager() {
   const navigate = useNavigate();
+  const { refresh: refreshContext } = useData();
   const [items, setItems] = useState<Author[]>(() => {
     const stored = dataService.getAuthors();
     return stored.length ? stored : initialAuthors;
@@ -24,7 +26,7 @@ export function AuthorsManager() {
   };
 
   const handleDelete = (id: string) => {
-    if (confirm('تأكيد الحذف؟')) { dataService.deleteAuthor(id); refresh(); }
+    if (confirm('تأكيد الحذف؟')) { dataService.deleteAuthor(id); refresh(); refreshContext(); }
   };
 
   if (editing) {
@@ -41,7 +43,7 @@ export function AuthorsManager() {
               </div>
             ))}
             <div className="flex gap-3 pt-2">
-              <button onClick={() => { dataService.saveAuthor(editing); setEditing(null); refresh(); }} className="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl text-sm">💾 حفظ</button>
+              <button onClick={async () => { await dataService.saveAuthor(editing); setEditing(null); refresh(); refreshContext(); }} className="px-5 py-2.5 bg-green-600 hover:bg-green-500 text-white font-bold rounded-xl text-sm">💾 حفظ</button>
               <button onClick={() => setEditing(null)} className="px-5 py-2.5 bg-gray-800 text-gray-300 rounded-xl text-sm">إلغاء</button>
             </div>
           </div>
