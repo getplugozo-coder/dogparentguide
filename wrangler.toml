@@ -1,23 +1,12 @@
-# ============================================================
-# DogParentGuide - Cloudflare Worker Configuration
-# Deploy: wrangler deploy
-# ============================================================
-name = "dogparentguide-sheets-proxy"
-main = "worker/sheets-proxy.ts"
-compatibility_date = "2024-12-01"
-compatibility_flags = ["nodejs_compat"]
+name = "dogparentguide-api"
+main = "worker/index.ts"
+compatibility_date = "2025-06-01"
 
-# Environment variables (set via wrangler secret put)
-# SHEETS_API_KEY=your_google_sheets_api_key
-# SHEETS_ID=your_google_spreadsheet_id
+# D1 Database
+[[d1_databases]]
+binding = "DB"
+database_name = "dpg-db"
+database_id = "052ce444-553a-401a-b2c2-0997c34717e2"
 
-[env.production]
-name = "dogparentguide-sheets-proxy"
-
-[env.preview]
-name = "dogparentguide-sheets-proxy-preview"
-
-# Durable Objects (if needed)
-# [[durable_objects.bindings]]
-# name = "MY_DURABLE_OBJECT"
-# class_name = "MyDurableObject"
+# Environment variables (set via `wrangler secret put`)
+# ADMIN_PASSWORD=your_secure_password

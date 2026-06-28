@@ -1,2 +1,2 @@
-# Legacy redirects (add as needed)
-# /old-url    /new-url    301
+# SPA Fallback
+/*    /index.html   200

@@ -1,10 +1,7 @@
+// Service layer - writes to Worker API + localStorage fallback
+
 import type { Article, Category, Author, Ad } from '../data/types';
-import {
-  saveArticleToAPI,
-  saveCategoryToAPI,
-  saveAuthorToAPI,
-  saveAdToAPI,
-} from './api';
+import * as api from './api';
 
 const STORAGE_KEYS = {
   articles: 'dpg_articles',
@@ -13,126 +10,83 @@ const STORAGE_KEYS = {
   ads: 'dpg_ads',
 };
 
-function getItem<T>(key: string, fallback: T[]): T[] {
-  try {
-    const raw = localStorage.getItem(key);
-    return raw ? JSON.parse(raw) : fallback;
-  } catch {
-    return fallback;
-  }
+function getLocal<T>(key: string, fallback: T[]): T[] {
+  try { const r = localStorage.getItem(key); return r ? JSON.parse(r) : fallback; } catch { return fallback; }
 }
 
-function setItem<T>(key: string, data: T[]): void {
+function setLocal<T>(key: string, data: T[]): void {
   localStorage.setItem(key, JSON.stringify(data));
 }
 
-// Column headers matching Google Sheets template
-const ARTICLE_HEADERS = ['id','title','slug','excerpt','content','featured_image','category_id','author_id','tags','reading_time','published_date','status','featured','trending','views','meta_title','meta_description','meta_keywords','canonical_url','faq_json','language'];
-const CATEGORY_HEADERS = ['id','name','slug','description','icon','color','image','parent_id','order','meta_title','meta_description','meta_keywords','language'];
-const AUTHOR_HEADERS = ['id','name','slug','avatar','bio','role','email','website','twitter','facebook','instagram','youtube','credentials','specialization','language'];
-const AD_HEADERS = ['id','name','type','code','placement','active','start_date','end_date'];
-
 export const dataService = {
-  // Articles
-  getArticles(): Article[] {
-    return getItem<Article>(STORAGE_KEYS.articles, []);
+  getArticles: () => getLocal<Article>(STORAGE_KEYS.articles, []),
+  getArticle: (id: string) => dataService.getArticles().find(a => a.id === id),
+  async saveArticle(article: Article) {
+    const list = this.getArticles();
+    const idx = list.findIndex(a => a.id === article.id);
+    if (idx >= 0) list[idx] = article; else list.push(article);
+    setLocal(STORAGE_KEYS.articles, list);
+    await api.saveArticle(article);
   },
-  setArticles(articles: Article[]): void {
-    setItem(STORAGE_KEYS.articles, articles);
-  },
-  getArticle(id: string): Article | undefined {
-    return this.getArticles().find(a => a.id === id);
-  },
-  async saveArticle(article: Article): Promise<void> {
-    const articles = this.getArticles();
-    const idx = articles.findIndex(a => a.id === article.id);
-    if (idx >= 0) articles[idx] = article;
-    else articles.push(article);
-    this.setArticles(articles);
-    await saveArticleToAPI(article, ARTICLE_HEADERS);
-  },
-  deleteArticle(id: string): void {
-    this.setArticles(this.getArticles().filter(a => a.id !== id));
+  deleteArticle(id: string) {
+    setLocal(STORAGE_KEYS.articles, this.getArticles().filter(a => a.id !== id));
+    api.deleteArticle(id);
   },
 
-  // Categories
-  getCategories(): Category[] {
-    return getItem<Category>(STORAGE_KEYS.categories, []);
+  getCategories: () => getLocal<Category>(STORAGE_KEYS.categories, []),
+  async saveCategory(cat: Category) {
+    const list = this.getCategories();
+    const idx = list.findIndex(c => c.id === cat.id);
+    if (idx >= 0) list[idx] = cat; else list.push(cat);
+    setLocal(STORAGE_KEYS.categories, list);
+    await api.saveCategory(cat);
   },
-  setCategories(cats: Category[]): void {
-    setItem(STORAGE_KEYS.categories, cats);
-  },
-  async saveCategory(cat: Category): Promise<void> {
-    const cats = this.getCategories();
-    const idx = cats.findIndex(c => c.id === cat.id);
-    if (idx >= 0) cats[idx] = cat;
-    else cats.push(cat);
-    this.setCategories(cats);
-    await saveCategoryToAPI(cat, CATEGORY_HEADERS);
-  },
-  deleteCategory(id: string): void {
-    this.setCategories(this.getCategories().filter(c => c.id !== id));
+  deleteCategory(id: string) {
+    setLocal(STORAGE_KEYS.categories, this.getCategories().filter(c => c.id !== id));
+    api.deleteCategory(id);
   },
 
-  // Authors
-  getAuthors(): Author[] {
-    return getItem<Author>(STORAGE_KEYS.authors, []);
+  getAuthors: () => getLocal<Author>(STORAGE_KEYS.authors, []),
+  async saveAuthor(author: Author) {
+    const list = this.getAuthors();
+    const idx = list.findIndex(a => a.id === author.id);
+    if (idx >= 0) list[idx] = author; else list.push(author);
+    setLocal(STORAGE_KEYS.authors, list);
+    await api.saveAuthor(author);
   },
-  setAuthors(authors: Author[]): void {
-    setItem(STORAGE_KEYS.authors, authors);
-  },
-  async saveAuthor(author: Author): Promise<void> {
-    const authors = this.getAuthors();
-    const idx = authors.findIndex(a => a.id === author.id);
-    if (idx >= 0) authors[idx] = author;
-    else authors.push(author);
-    this.setAuthors(authors);
-    await saveAuthorToAPI(author, AUTHOR_HEADERS);
-  },
-  deleteAuthor(id: string): void {
-    this.setAuthors(this.getAuthors().filter(a => a.id !== id));
+  deleteAuthor(id: string) {
+    setLocal(STORAGE_KEYS.authors, this.getAuthors().filter(a => a.id !== id));
+    api.deleteAuthor(id);
   },
 
-  // Ads
-  getAds(): Ad[] {
-    return getItem<Ad>(STORAGE_KEYS.ads, []);
+  getAds: () => getLocal<Ad>(STORAGE_KEYS.ads, []),
+  async saveAd(ad: Ad) {
+    const list = this.getAds();
+    const idx = list.findIndex(a => a.id === ad.id);
+    if (idx >= 0) list[idx] = ad; else list.push(ad);
+    setLocal(STORAGE_KEYS.ads, list);
+    await api.saveAd(ad);
   },
-  setAds(ads: Ad[]): void {
-    setItem(STORAGE_KEYS.ads, ads);
-  },
-  async saveAd(ad: Ad): Promise<void> {
-    const ads = this.getAds();
-    const idx = ads.findIndex(a => a.id === ad.id);
-    if (idx >= 0) ads[idx] = ad;
-    else ads.push(ad);
-    this.setAds(ads);
-    await saveAdToAPI(ad, AD_HEADERS);
-  },
-  deleteAd(id: string): void {
-    this.setAds(this.getAds().filter(a => a.id !== id));
+  deleteAd(id: string) {
+    setLocal(STORAGE_KEYS.ads, this.getAds().filter(a => a.id !== id));
+    api.deleteAd(id);
   },
 
-  // Export all as JSON
-  exportAll(): string {
-    return JSON.stringify({
-      articles: this.getArticles(),
-      categories: this.getCategories(),
-      authors: this.getAuthors(),
-      ads: this.getAds(),
-    }, null, 2);
-  },
+  exportAll: () => JSON.stringify({
+    articles: dataService.getArticles(),
+    categories: dataService.getCategories(),
+    authors: dataService.getAuthors(),
+    ads: dataService.getAds(),
+  }, null, 2),
 
-  // Import from JSON
-  importAll(json: string): boolean {
+  importAll(json: string) {
     try {
       const data = JSON.parse(json);
-      if (data.articles) this.setArticles(data.articles);
-      if (data.categories) this.setCategories(data.categories);
-      if (data.authors) this.setAuthors(data.authors);
-      if (data.ads) this.setAds(data.ads);
+      if (data.articles) setLocal(STORAGE_KEYS.articles, data.articles);
+      if (data.categories) setLocal(STORAGE_KEYS.categories, data.categories);
+      if (data.authors) setLocal(STORAGE_KEYS.authors, data.authors);
+      if (data.ads) setLocal(STORAGE_KEYS.ads, data.ads);
       return true;
-    } catch {
-      return false;
-    }
+    } catch { return false; }
   },
 };
