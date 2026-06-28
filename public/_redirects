@@ -1,13 +1,2 @@
-# Cloudflare Pages Redirects
-# SPA Fallback - All routes handled by React Router
-/assets/*  /assets/:splat  200
-/images/*  /images/:splat  200
-/favicon.*  /favicon.:splat  200
-/sitemap.xml  /sitemap.xml  200
-/rss.xml  /rss.xml  200
-/robots.txt  /robots.txt  200
-/ads.txt  /ads.txt  200
-/*    /index.html   200
-
-# Legacy URL redirects (add as needed)
+# Legacy redirects (add as needed)
 # /old-url    /new-url    301
